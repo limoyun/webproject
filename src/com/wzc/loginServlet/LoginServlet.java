@@ -5,7 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 import com.wzc.loginDao.UserDao;
 
 public class LoginServlet extends HttpServlet {
@@ -40,7 +40,9 @@ public class LoginServlet extends HttpServlet {
 			return;
 		}
 		if(psw.equals(password)){
-			request.setAttribute("msg", "用户："+username+",登陆成功");
+			//request.setAttribute("msg", "用户："+username+",登陆成功");
+			HttpSession session=request.getSession();
+			session.setAttribute("user",username);
 			request.getRequestDispatcher("/welcome.jsp").forward(request, response);
 			//response.setHeader("Refresh","1;url=welcome.jsp");
 		}

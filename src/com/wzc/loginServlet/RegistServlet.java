@@ -20,6 +20,9 @@ public class RegistServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String rpsw = request.getParameter("rpsw");
+		String encrypted = request.getParameter("encrypted");//密保
+		String answer=request.getParameter("answer");//答案
+		System.out.println("encrypted="+encrypted);
 		if(username==null||username.trim().isEmpty()){
 			request.setAttribute("msg", "万水千山总是情，给个账号行不行！");
 			request.getRequestDispatcher("/regist.jsp").forward(request, response);
@@ -35,9 +38,9 @@ public class RegistServlet extends HttpServlet {
 			request.getRequestDispatcher("/regist.jsp").forward(request, response);
 			return;
 		}
-		//System.out.println("<script language='javascript'>alert('用户注册成功！');window.location.href='index.jsp';</script>");
+		
 		UserDao u = new UserDao();
-		u.addUser(username,password);
+		u.addUser(username,password,encrypted,answer);
 		request.setAttribute("msg", "<script language='javascript'>alert('用户注册成功！');</script>");
 		request.getRequestDispatcher("/index.jsp").forward(request, response);
 

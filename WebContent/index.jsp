@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <tr><td colspan="3" align="center"><input type="submit" value="登录" style="width:130;height:30;"/></td></tr>  
     </table>  
     </form>  
-    <input type="submit" name="Submit" value="忘记密码" onclick="window.location.href('modify.jsp')" >
+    <input type="submit" name="Submit" value="忘记密码" onclick="window.location.href('forgetpassword.jsp')" >
     <input type="submit" name="Submit" value="注册" onclick="window.location.href('regist.jsp')" >
 <font color="red" size="2"> ${msg }</font>  
 

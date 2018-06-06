@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div>  
     <h1>修改密码</h1>  
     <form action="MofifyServlet" method="post">  
-    请输入帐号：<input type="text" name="username"><br/>  
+  
     请输入原密码：<input type="password" name="oldpassword"><br/>  
     请输入密码：<input type="password" name="password"><br/>  
     请确认密码：<input type="password" name="rpsw"><br/>  

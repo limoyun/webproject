@@ -5,10 +5,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 import com.wzc.loginDao.UserDao;
 
-public class MofifyServlet extends HttpServlet {
+public class Mofify2Servlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -17,39 +17,38 @@ public class MofifyServlet extends HttpServlet {
 
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		HttpSession session = request.getSession();
-		String username=(String) session.getAttribute("user");
-		String oldpassword = request.getParameter("oldpassword");
+		String username = request.getParameter("username");
+		String answer = request.getParameter("answer");
 		String password = request.getParameter("password");
 		String rpsw = request.getParameter("rpsw");
-		String psw =new UserDao().findUser(username);
+		String psw =new UserDao().findUseranswer(username);
 		System.out.println("psw="+psw);
-		if(psw!=null&&!psw.equals(oldpassword)){
+		if(psw!=null&&!psw.equals(answer)){
 			request.setAttribute("username", username);
 			request.setAttribute("msg", psw);
-			request.getRequestDispatcher("/modify.jsp").forward(request, response);
+			request.getRequestDispatcher("/forgetpassword.jsp").forward(request, response);
 			return;
 		}
 		if(username==null||username.trim().isEmpty()){
 			request.setAttribute("msg", "万水千山总是情，给个账号行不行！");
-			request.getRequestDispatcher("/modify.jsp").forward(request, response);
+			request.getRequestDispatcher("/forgetpassword.jsp").forward(request, response);
 			return;
 		}
 		if(password==null||password.trim().isEmpty()){
 			request.setAttribute("msg", "春风不度玉门关，没有密码心怎安");
-			request.getRequestDispatcher("/modify.jsp").forward(request, response);
+			request.getRequestDispatcher("/forgetpassword.jsp").forward(request, response);
 			return;
 		}
 		if(!password.equals(rpsw)){
 			request.setAttribute("msg", "小荷才露尖尖角，两次密码没搞好");
-			request.getRequestDispatcher("/modify.jsp").forward(request, response);
+			request.getRequestDispatcher("/forgetpassword.jsp").forward(request, response);
 			return;
 		}
 		//System.out.println("<script language='javascript'>alert('用户注册成功！');window.location.href='index.jsp';</script>");
 		UserDao u = new UserDao();
 		u.modify(username,password);
 		request.setAttribute("msg", "<script language='javascript'>alert('用户修改密码成功！');</script>");
-		request.getRequestDispatcher("/welcome.jsp").forward(request, response);
+		request.getRequestDispatcher("/index.jsp").forward(request, response);
 
 	}
 

@@ -25,14 +25,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>  
     
   <body>  
-    <h1>此页可以上传文件哦！</h1>
-    <h2>${msg }</h2>  
+    
+        <h2>欢迎 
+      <%=session.getAttribute("user")%>
+       登陆
+      <input type="submit" name="Submit" value="修改密码" onclick="window.location.href('modify.jsp')" >
+ </h2> 
     <br>  
-      
-        
+     
+        <form action="PostMessageServlet" method="post">
+		<br>标题<input type="text" name="title"> <br>内容
+	<textarea rows="20" cols=40 name="content"></textarea>
+		<input type="submit" value="发表" />
+	</form>
+	   <input type="submit" name="Submit" value="搜索帖子" onclick="window.location.href('findpost.jsp')" >
         <form action="${pageContext.request.contextPath}/servlet/UploadHandleServlet" enctype="multipart/form-data" method="post">
-        上传用户：<input type="text" name="username"><br/>
-        上传文件1：<input type="file" name="file1"><br/>
+   
+        上传文件：<input type="file" name="file1"><br/>
         上传文件2：<input type="file" name="file2"><br/>
         <input type="submit" value="提交">
     </form> 

@@ -1,4 +1,6 @@
+ 
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>  
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%  
 String path = request.getContextPath();  
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";  
@@ -9,8 +11,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>  
     <base href="<%=basePath%>">  
       
-    <title>注册界面</title>  
-      
+    <title>findpost</title>  
+      <script type='text/javascript' src='/FileUploadDownLoad/jquery-2.1.1.js'></script>  
+          
     <meta http-equiv="pragma" content="no-cache">  
     <meta http-equiv="cache-control" content="no-cache">  
     <meta http-equiv="expires" content="0">      
@@ -19,25 +22,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- 
     <link rel="stylesheet" type="text/css" href="styles.css"> 
     -->  
-  
   </head>  
     
   <body>  
-  <center>  
-    <div>  
-    <h1>注册</h1>  
-    <form action="RegistServlet" method="post">  
-    请输入帐号：<input type="text" name="username"><br/>  
-    请输入密码：<input type="password" name="password"><br/>  
-    请确认密码：<input type="password" name="rpsw"><br/>  
-    请输入密保：<input type="text" name="encrypted"><br/>
-    请输入答案：<input type="text" name="answer"><br/>
-    <input type="submit" value="注册">  
-    </form>  
-    <input type="submit" name="Submit" value="返回" onclick="window.location.href('index.jsp')" >
-    <br>
-   <font color="red" size="2"> ${msg }</font>  
-    </div>  
-    </center>  
+    
+      
+    <br>  
+     
+        <form action="findpostServlet" method="post">
+		<br>帖子<input type="text" name="title"> <br>
+		<input type="submit" value="查找" />
+	</form>
+   ${msg }
+   <br>
+	<input type="submit" name="Submit" value="返回" onclick="window.history.back()" >
+	 
+        
   </body>  
 </html>  

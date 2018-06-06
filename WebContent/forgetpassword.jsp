@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>  
     <base href="<%=basePath%>">  
       
-    <title>注册界面</title>  
+    <title>修改密码界面</title>  
       
     <meta http-equiv="pragma" content="no-cache">  
     <meta http-equiv="cache-control" content="no-cache">  
@@ -25,15 +25,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>  
   <center>  
     <div>  
-    <h1>注册</h1>  
-    <form action="RegistServlet" method="post">  
-    请输入帐号：<input type="text" name="username"><br/>  
+    <h1>忘记密码</h1>  
+   
+    <form action="encryptedServlet" method="post">  
+        请输入帐号：<input type="text" name="username"><br/>  
+   
+
+    <input type="submit" value="确认">  
+    </form>  
+  
+	密保：${msg }<br>
+	<form action="Mofify2Servlet" method="post">  
+	请输入帐号：<input type="text" name="username"><br/> 
+	请输入答案：<input type="text" name="answer"><br/>  
     请输入密码：<input type="password" name="password"><br/>  
     请确认密码：<input type="password" name="rpsw"><br/>  
-    请输入密保：<input type="text" name="encrypted"><br/>
-    请输入答案：<input type="text" name="answer"><br/>
-    <input type="submit" value="注册">  
+    <input type="submit" value="修改">  
     </form>  
+	
+    
     <input type="submit" name="Submit" value="返回" onclick="window.location.href('index.jsp')" >
     <br>
    <font color="red" size="2"> ${msg }</font>  

@@ -34,16 +34,72 @@ public class UserDao {
 			}
 		}
 		return psw;
+	}//根据用户名找密保
+	public String findUserencrypted(String username){
+		String psw = null;
+		String sql = "select * from user where username=?";
+		Connection con =getConnection();
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, username);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				psw=rs.getString("encrypted");
+			}else{
+				psw=null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			} catch (SQLException e) {		
+				e.printStackTrace();
+			}
+		}
+		return psw;
+	}//根据用户名找答案
+	public String findUseranswer(String username){
+		String psw = null;
+		String sql = "select * from user where username=?";
+		Connection con =getConnection();
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, username);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				psw=rs.getString("answer");
+			}else{
+				psw=null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			} catch (SQLException e) {		
+				e.printStackTrace();
+			}
+		}
+		return psw;
 	}
 	//添加用户
-	public void addUser(String username,String psw){
+	public void addUser(String username,String psw,String enc,String ans){
 		Connection con = getConnection();
 		PreparedStatement pstmt =null;
-		String sql = "INSERT INTO user(username,password) VALUES(?,?)";
+		String sql = "INSERT INTO user(username,password,encrypted,answer) VALUES(?,?,?,?)";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, username);
 			pstmt.setString(2, psw);
+			pstmt.setString(3, enc);
+			pstmt.setString(4, ans);
 			pstmt.executeUpdate();
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -55,6 +111,56 @@ public class UserDao {
 				e.printStackTrace();
 			}
 		}
+	}
+	//添加帖子
+	public void addTitle(String postid,String username,String content,String title){
+		Connection con = getConnection();
+		PreparedStatement pstmt =null;
+		String sql = "INSERT INTO post(postid,username,content,title) VALUES(?,?,?,?)";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, postid);
+			pstmt.setString(2, username);
+			pstmt.setString(3, content);
+			pstmt.setString(4, title);
+			pstmt.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch (SQLException e) {	
+				e.printStackTrace();
+			}
+		}
+	}//根据用户名找帖子
+	public String findpost(String title){
+		String psw = null;
+		String sql = "select * from post where title=?";
+		Connection con =getConnection();
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, title);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				psw=rs.getString("content");
+			}else{
+				psw=null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			} catch (SQLException e) {		
+				e.printStackTrace();
+			}
+		}
+		return psw;
 	}
 	//修改密码
 	public void modify(String username,String psw){
@@ -76,6 +182,33 @@ public class UserDao {
 				e.printStackTrace();
 			}
 		}
+	}
+	public String findline(){
+		String id = null;
+		String sql = "select max(postid) from post";
+		Connection con =getConnection();
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			//pstmt.setString(1, username);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				id=rs.getString("max(postid)");
+			}else{
+				id=null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			} catch (SQLException e) {		
+				e.printStackTrace();
+			}
+		}
+		return id;
 	}
 	//获得连接
 	public static Connection getConnection(){
@@ -100,14 +233,6 @@ public class UserDao {
 //		new UserDao().addUser("1345", "1345");
 	}
 
-/*
- * 数据表
-  CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
-*/
+
 	
 }
